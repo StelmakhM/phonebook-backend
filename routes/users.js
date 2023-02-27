@@ -1,4 +1,10 @@
 const express = require("express");
+const {
+	getCurrentUser,
+	loginUser,
+	logoutUser,
+	registerUser,
+} = require("../controllers/user");
 
 const router = express.Router();
 
