@@ -5,12 +5,14 @@ const {
 	logoutUser,
 	registerUser,
 } = require("../controllers/user");
+const { validateJoi, auth } = require("../middlewares");
+const { userLoginSchema, userRegisterSchema } = require("../schemas");
 
 const router = express.Router();
 
-router.get("/current", getCurrentUser);
-router.get("/logout", logoutUser);
-router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.get("/current", auth, getCurrentUser);
+router.get("/logout", auth, logoutUser);
+router.post("/register", auth, validateJoi(userRegisterSchema), registerUser);
+router.post("/login", auth, validateJoi(userLoginSchema), loginUser);
 
 module.exports = router;

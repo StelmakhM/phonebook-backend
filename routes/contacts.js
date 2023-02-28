@@ -5,13 +5,19 @@ const {
 	getAllContacts,
 	updateContactById,
 } = require("../controllers/contact");
-const auth = require("../middlewares");
+const { auth, validateJoi } = require("../middlewares");
+const { addContactSchema, updateContactSchema } = require("../schemas");
 
 const router = express.Router();
 
 router.get("/contacts", auth, getAllContacts);
-router.post("/contacts", auth, addNewContact);
-router.patch("/contacts/:id", auth, updateContactById);
+router.post("/contacts", auth, validateJoi(addContactSchema), addNewContact);
+router.patch(
+	"/contacts/:id",
+	auth,
+	validateJoi(updateContactSchema),
+	updateContactById
+);
 router.delete("/contacts/:id", auth, deleteContactById);
 
 module.exports = router;
