@@ -1,7 +1,7 @@
-const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const { Unauthorized } = require("http-errors");
 require("dotenv").config();
+const { User } = require("../models");
 
 const auth = async (req, res, next) => {
 	try {
