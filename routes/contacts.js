@@ -10,14 +10,9 @@ const { addContactSchema, updateContactSchema } = require("../schemas");
 
 const router = express.Router();
 
-router.get("/contacts", auth, getAllContacts);
-router.post("/contacts", auth, validateJoi(addContactSchema), addNewContact);
-router.patch(
-	"/contacts/:id",
-	auth,
-	validateJoi(updateContactSchema),
-	updateContactById
-);
-router.delete("/contacts/:id", auth, deleteContactById);
+router.get("/", auth, getAllContacts);
+router.post("/", auth, validateJoi(addContactSchema), addNewContact);
+router.patch("/:id", auth, validateJoi(updateContactSchema), updateContactById);
+router.delete("/:id", auth, deleteContactById);
 
 module.exports = router;
