@@ -10,15 +10,13 @@ const loginUser = async (req, res, next) => {
 		if (!user || !user.comparePasswords(password)) {
 			throw new Unauthorized("Email or password is wrong");
 		}
-		const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
-		const token = jwt.sign({ id: user._id }, JWT_SECRET, {
-			expiresIn: JWT_EXPIRES_IN,
-		});
-		await User.findByIdAndUpdate(user.id, { token });
+		user.createJWT();
 		res.status(200).json({
 			message: "success",
 			code: 200,
-			data: {
+			user: {
+				name: user.name,
+				email,
 				token,
 			},
 		});

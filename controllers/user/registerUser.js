@@ -8,18 +8,22 @@ const registerUser = async (req, res, next) => {
 		if (user) {
 			throw new Conflict(`User with email ${email} already exist`);
 		}
+
 		const newUser = new User({
 			name,
 			email,
 		});
 		newUser.setPassword(password);
+		newUser.createJWT();
 		await newUser.save();
+
 		res.status(201).json({
 			message: "Success",
 			code: 201,
-			data: {
+			user: {
 				name,
 				email,
+				token: newUser.token,
 			},
 		});
 	} catch (error) {

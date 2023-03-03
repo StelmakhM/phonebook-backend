@@ -8,7 +8,7 @@ const getCurrentUser = async (req, res, next) => {
 		res.status(200).json({
 			message: "success",
 			code: 200,
-			data: {
+			user: {
 				name,
 				email,
 				token,
