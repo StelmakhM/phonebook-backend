@@ -1,7 +1,5 @@
 const { User } = require("../../models");
 const { Unauthorized } = require("http-errors");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 const loginUser = async (req, res, next) => {
 	try {
@@ -11,13 +9,14 @@ const loginUser = async (req, res, next) => {
 			throw new Unauthorized("Email or password is wrong");
 		}
 		user.createJWT();
+		user.save();
 		res.status(200).json({
 			message: "success",
 			code: 200,
 			user: {
 				name: user.name,
 				email,
-				token,
+				token: user.token,
 			},
 		});
 	} catch (error) {
